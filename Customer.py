@@ -19,7 +19,7 @@ class Customer:
             'id': self.ID,
             'name': self.name,
             'address': self.address,
-            'cars': self.cars
+            'cars': [{'name':h.name, 'number_plate': h.number_plate} for h in self.cars]
         }
 
 

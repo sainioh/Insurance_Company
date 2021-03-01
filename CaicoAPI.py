@@ -32,7 +32,7 @@ def customerInfo(customer_id):
 def addCar(customer_id):
     c = company.getCustomerById(customer_id)
     if (c != None):
-        car = Car(request.args.get(',model'), request.args.get('number_plate'), request.args.get('motor_power'))
+        car = Car(request.args.get('model'), request.args.get('number_plate'), request.args.get('motor_power'), request.args.get('year'))
         c.addCar(car)
     return jsonify(
         success=c != None,
