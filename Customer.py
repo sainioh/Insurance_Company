@@ -14,10 +14,12 @@ class Customer:
 
     # convert object o JSON
     def serialize(self):
+
         return {
             'id': self.ID,
             'name': self.name,
             'address': self.address,
+            'cars': self.cars
         }
 
 
