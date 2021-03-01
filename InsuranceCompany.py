@@ -1,4 +1,5 @@
 from Customer import *
+from Agent import *
 
 
 class InsuranceCompany:
@@ -14,6 +15,11 @@ class InsuranceCompany:
         c = Customer(name, address)
         self.customers.append(c)
         return c.ID
+
+    def addAgent(self, name, address):
+        a = Agent(name, address)
+        self.agents.append(a)
+        return a.ID
 
     def getCustomerById(self, id_):
         for d in self.customers:

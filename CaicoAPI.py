@@ -56,6 +56,14 @@ def allCustomers():
     return jsonify(customers=[h.serialize() for h in company.getCustomers()])
 
 
+# Add a new Agent (parameters: name, address).
+@app.route("/agent", methods=["POST"])
+def addAgent():
+    # parameters are passed in the body of the request
+    a_id = company.addAgent(request.args.get('name'), request.args.get('address'))
+    return jsonify(f"Added a new Agent with ID {a_id}")
+
+
 ###DO NOT CHANGE CODE BELOW THIS LINE ##############################
 @app.route("/")
 def index():
