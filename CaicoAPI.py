@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from InsuranceCompany import *
 from Customer import *
+from Agent import *
+from Claim import *
 
 app = Flask(__name__)
 
@@ -56,12 +58,69 @@ def allCustomers():
     return jsonify(customers=[h.serialize() for h in company.getCustomers()])
 
 
+# ----------------AGENTS ---------------------
+
 # Add a new Agent (parameters: name, address).
 @app.route("/agent", methods=["POST"])
 def addAgent():
     # parameters are passed in the body of the request
     a_id = company.addAgent(request.args.get('name'), request.args.get('address'))
     return jsonify(f"Added a new Agent with ID {a_id}")
+
+@app.route("/agents", methods=["GET"])
+def allAgents():
+    return jsonify(customers=[h.serialize() for h in company.getAgents()])
+
+
+@app.route("/agent/<agent_id>", methods=["GET"])
+def agentInfo(agent_id):
+    a = company.getAgentById(agent_id)
+    if (a != None):
+        return jsonify(a.serialize())
+    return jsonify(
+        success=False,
+        message="Customer not found")
+
+
+@app.route("/agent/<agent_id>/<customer_id>", methods=["POST"])
+def assignCustomertoAgent(agent_id, customer_id):
+    c = company.getCustomerById(customer_id)
+    a = company.getAgentById(agent_id)
+
+    if (c != None and a != None):
+        a.addCustomertoAgent(c)
+
+    return jsonify(agents=[h.serialize() for h in company.getAgents()])  # REMOVE AFTER TEST
+
+
+@app.route("/agent/<agent_id>", methods=["DELETE"])
+def deleteAgent(agent_id):
+    result = company.deleteAgent(agent_id)
+    if (result):
+        message = f"Customer with id{agent_id} was deleted"
+    else:
+        message = "Agent not found"
+    return jsonify(
+        success=result,
+        message=message)
+
+
+
+# ----------------CLAIMS---------------------
+
+# File a new claim (parameters: date, incident_description, claim_amount).
+
+@app.route("/claims/<customer_id>/file", methods=["POST"])
+def addClaim(customer_id):
+    c = company.getCustomerById(customer_id)
+    if (c != None):
+        claim = Claim(request.args.get('date'), request.args.get('incident_description'), request.args.get('claim_amount'))
+        c.addClaim(claim)
+    return jsonify(
+        success=c != None,
+        message="Customer not found")
+
+
 
 
 ###DO NOT CHANGE CODE BELOW THIS LINE ##############################
@@ -82,4 +141,4 @@ def add_headers(response):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8888)
+    app.run(debug=True, port=8889)
