@@ -15,7 +15,7 @@ class Agent:
             'id': self.ID,
             'name': self.name,
             'address': self.address,
-            'customers': [{'name': h.name} for h in self.customers]
+            'customers': [h.serialize() for h in self.customers]
         }
 
     def addCustomertoAgent(self, customer):

@@ -69,7 +69,7 @@ def addAgent():
 
 @app.route("/agents", methods=["GET"])
 def allAgents():
-    return jsonify(customers=[h.serialize() for h in company.getAgents()])
+    return jsonify(agents=[h.serialize() for h in company.getAgents()])
 
 
 @app.route("/agent/<agent_id>", methods=["GET"])
@@ -116,9 +116,37 @@ def addClaim(customer_id):
     if (c != None):
         claim = Claim(request.args.get('date'), request.args.get('incident_description'), request.args.get('claim_amount'))
         c.addClaim(claim)
+        company.addClaim(claim)
     return jsonify(
         success=c != None,
         message="Customer not found")
+
+
+@app.route("/claims/<claim_id>", methods=["GET"])
+def claimInfo(claim_id):
+    cl = company.getClaimById(claim_id)
+    if (cl != None):
+        return jsonify(cl.serialize())
+    return jsonify(
+        success=False,
+        message="Claim not found")
+
+
+@app.route("/claims", methods=["GET"])
+def allClaims():
+    return jsonify(claims=[cl.serialize() for cl in company.getClaims()])
+
+
+@app.route("/claims/<claim_id>/status", methods=["PUT"])
+def putClaimStatus(claim_id):
+    cl = company.getClaimById(claim_id)
+    covered = request.args.get('approved_amount')
+    if (cl != None):
+        cl.changeStatus(covered)
+
+    return jsonify(
+        success=False,
+        message="Claim not found")
 
 
 
@@ -141,4 +169,4 @@ def add_headers(response):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8889)
+    app.run(debug=True, port=5000)

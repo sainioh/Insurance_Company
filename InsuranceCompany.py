@@ -7,12 +7,16 @@ class InsuranceCompany:
         self.name = name  # Name of the Insurance company
         self.customers = []  # list of customers
         self.agents = []  # list of agents
+        self.claims = []   # list of claims
 
     def getCustomers(self):
         return list(self.customers)
 
     def getAgents(self):
         return list(self.agents)
+
+    def getClaims(self):
+        return list(self.claims)
 
     def addCustomer(self, name, address):
         c = Customer(name, address)
@@ -23,6 +27,9 @@ class InsuranceCompany:
         a = Agent(name, address)
         self.agents.append(a)
         return a.ID
+
+    def addClaim(self, claim):
+        self.claims.append(claim)
 
 
     def getCustomerById(self, id_):
@@ -37,6 +44,12 @@ class InsuranceCompany:
                 return d
         return None
 
+    def getClaimById(self, id_):
+        for cl in self.claims:
+            if cl.ID == id_:
+                return cl
+
+
     def deleteCustomer(self, customer_id):
         c = self.getCustomerById(customer_id)
         self.customers.remove(c)
@@ -47,7 +60,7 @@ class InsuranceCompany:
             customerlist = a.customers
             self.agents.remove(a)
             for i in customerlist:
-                agent[0].addCustomertoAgent(i)
+                self.agents[0].addCustomertoAgent(i)
             return True
         else:
             self.agents.remove(a)
