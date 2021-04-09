@@ -3,6 +3,7 @@ from InsuranceCompany import *
 from Customer import *
 from Agent import *
 from Claim import *
+from Payment import *
 
 app = Flask(__name__)
 
@@ -147,6 +148,40 @@ def putClaimStatus(claim_id):
     return jsonify(
         success=False,
         message="Claim not found")
+
+
+# ----------------PAYMENTS---------------------
+
+@app.route("/payment/in", methods=["POST"])
+def addPaymentIn():
+
+    payment = InPayment(request.args.get('date'), request.args.get('customer_id'), request.args.get('amount_received'))
+
+    p = company.getCustomerById(payment.customer_id)
+    if (p != None):
+        p.addPayment(payment)
+        company.addPayment(payment)
+    return jsonify(
+        success= p != None)
+
+
+
+@app.route("/payment/out", methods=["POST"])
+def addPaymentOut():
+
+    payment = OutPayment(request.args.get('date'), request.args.get('agent_id'), request.args.get('amount_sent'))
+
+    p = company.getAgentById(payment.agent_id)
+    if (p != None):
+        p.addPayment(payment)
+        company.addPayment(payment)
+    return jsonify(
+        success= p != None)
+
+
+@app.route("/payments", methods=["GET"])
+def allPayments():
+    return jsonify(payments=[cl.serialize() for cl in company.getPayments()])
 
 
 

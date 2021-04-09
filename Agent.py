@@ -8,6 +8,7 @@ class Agent:
         self.name = name
         self.address = address
         self.customers = []
+        self.payments = []
 
     # convert object o JSON
     def serialize(self):
@@ -21,4 +22,7 @@ class Agent:
     def addCustomertoAgent(self, customer):
         self.customers.append(customer)
         return None
+
+    def addPayment(self, payment):
+        self.payments.append(payment)
 

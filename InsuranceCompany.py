@@ -8,6 +8,7 @@ class InsuranceCompany:
         self.customers = []  # list of customers
         self.agents = []  # list of agents
         self.claims = []   # list of claims
+        self.payments = [] # list of payments
 
     def getCustomers(self):
         return list(self.customers)
@@ -17,6 +18,9 @@ class InsuranceCompany:
 
     def getClaims(self):
         return list(self.claims)
+
+    def getPayments(self):
+        return list(self.payments)
 
     def addCustomer(self, name, address):
         c = Customer(name, address)
@@ -30,6 +34,9 @@ class InsuranceCompany:
 
     def addClaim(self, claim):
         self.claims.append(claim)
+
+    def addPayment(self, payment):
+        self.payments.append(payment)
 
 
     def getCustomerById(self, id_):

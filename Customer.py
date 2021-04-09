@@ -9,12 +9,20 @@ class Customer:
         self.address = address
         self.cars = []  # List of cars
         self.claims = []  # list of claims
+        self.payments = []
+
 
     def addCar(self, car):
         self.cars.append(car)
 
+
     def addClaim(self, claim):
         self.claims.append(claim)
+
+
+    def addPayment(self, payment):
+        self.payments.append(payment)
+
 
     # convert object o JSON
     def serialize(self):
