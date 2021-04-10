@@ -22,6 +22,15 @@ class Claim:
 
 
     def changeStatus(self, covered):
+        '''
+        Changes the status of Claim based on the parameter "covered". If it matches the claim amount the status is set
+        to "FULLY COVERED", otherwise if covered is lower than claimed amount status is set to "PARTLY COVERED".
+        Finally if covered is set to zero, the status is set to "REJECTED".
+        Default value for claim status is "unprocessed" and zero for the amount_covered until the agent/company has
+        reviewed the claim.
+        :param covered:
+        :return:
+        '''
         covered = int(covered)
         self.amount_covered = covered
         if (covered > 0 and covered < int(self.claim_amount)):

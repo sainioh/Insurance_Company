@@ -23,6 +23,13 @@ class Customer:
     def addPayment(self, payment):
         self.payments.append(payment)
 
+    def getClaims(self):
+        return list(self.claims)
+
+
+    def getPayments(self):
+        return list(self.payments)
+
 
     # convert object o JSON
     def serialize(self):

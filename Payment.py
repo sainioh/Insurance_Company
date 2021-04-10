@@ -2,6 +2,7 @@ import uuid
 
 
 # Using inheritance to support future expansion of different kind of payments for the company
+
 class Payment:
     def __init__(self, date,amount_received):
         self.date = date
