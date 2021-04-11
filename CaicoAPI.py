@@ -97,7 +97,7 @@ def agentInfo(agent_id):
         return jsonify(a.serialize())
     return jsonify(
         success=False,
-        message="Customer not found")
+        message="Agent not found")
 
 
 

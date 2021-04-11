@@ -145,5 +145,3 @@ class InsuranceCompany:
         else:
             self.agents.remove(a)
             return True
-
-        return False
